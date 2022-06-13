@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
@@ -22,4 +23,9 @@ Route::post('register', RegisterController::class);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+//projects routes
+Route::middleware('auth:sanctum')->controller(ProjectController::class)->prefix('projects')->group(function(){
+    Route::get('/', 'index');
 });

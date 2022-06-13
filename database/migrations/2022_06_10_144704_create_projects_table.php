@@ -21,6 +21,8 @@ return new class extends Migration
             $table->id();
             $table->string('key');
             $table->string('name');
+            $table->string('slug')->unique()->index();
+            $table->string('image')->nullable();
             $table->longText('description');
             $table->date('initial_date');
             $table->date('projected_end_date');

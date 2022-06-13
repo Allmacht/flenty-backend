@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('business_name');
-            $table->string('slug')->unique();
+            $table->string('slug')->unique()->index();
             $table->string('email')->unique();
             $table->string('phone');
             $table->boolean('status')->default(true);

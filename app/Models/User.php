@@ -45,6 +45,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $appends = [
+        'role_names'
+    ];
+
     public function setFolioAttribute()
     {
         $this->attributes['folio'] = strtoupper(uniqid("USR-"));
@@ -54,5 +58,10 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = Hash::make($value);
 
+    }
+
+    public function getRoleNamesAttribute()
+    {
+        return $this->getRoleNames();
     }
 }

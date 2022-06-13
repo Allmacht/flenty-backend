@@ -24,5 +24,14 @@ class UserSeeder extends Seeder
                 'password' => 'admin'
             ]
         )->assignRole('super-admin');
+
+        User::create(
+            [
+                'folio' => strtoupper('USR-'),
+                'name' => 'Ulises Jacob Calva Robledo',
+                'email' => 'ulises.jacob.cr@gmail.com',
+                'password' => 'admin'
+            ]
+        )->assignRole('Project-administrator');
     }
 }
