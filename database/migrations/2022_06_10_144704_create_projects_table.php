@@ -21,6 +21,7 @@ return new class extends Migration
             $table->id();
             $table->string('key');
             $table->string('name');
+            $table->string('uuid')->unique()->index();
             $table->string('slug')->unique()->index();
             $table->string('image')->nullable();
             $table->longText('description');
@@ -28,7 +29,8 @@ return new class extends Migration
             $table->date('projected_end_date');
             $table->timestamp('end_date')->nullable();
             $table->boolean('public')->default(true);
-            $table->enum('status', ['COMPLETED', 'IN PROCESS', 'PENDING', 'DELAYED', 'CANCELED']);
+            $table->enum('status', ['CREATED', 'COMPLETED', 'IN PROCESS', 'PENDING', 'DELAYED', 'CANCELED']);
+            $table->boolean('approved')->default(false);
             $table->unsignedBigInteger('owner_id');
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('CASCADE');
             $table->unsignedBigInteger('qa_id');
