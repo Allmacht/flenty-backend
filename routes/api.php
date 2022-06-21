@@ -48,7 +48,7 @@ Route::middleware('auth:sanctum')->controller(ProjectTypeController::class)->pre
 //projects routes
 Route::middleware('auth:sanctum')->controller(ProjectController::class)->prefix('projects')->group(function(){
     Route::get('/', 'index');
-    Route::post('/store', 'store');
+    Route::post('/', 'store');
 });
 
 Route::middleware('auth:sanctum')->controller(ClientController::class)->prefix('clients')->group(function(){
