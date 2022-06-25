@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('key');
             $table->string('name');
             $table->string('uuid')->unique()->index();
-            $table->string('slug')->unique()->index();
+            $table->string('slug');
             $table->string('image')->nullable();
             $table->longText('description');
             $table->date('initial_date');

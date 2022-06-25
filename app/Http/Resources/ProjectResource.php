@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use Carbon\Carbon;
 class ProjectResource extends JsonResource
 {
     /**
@@ -21,11 +21,14 @@ class ProjectResource extends JsonResource
             'image'  => $this->image,
             'slug'   => $this->slug,
             'status' => $this->status,
+            'type'   => new ProjectTypeResource($this->whenLoaded('projectType')),
             $this->mergeWhen($request->input('all_data'), [
                 'description'        => $this->description,
-                'initial_date'       => $this->initial_date->format('Y-m-d H:i:s'),
-                'projected_end_date' => $this->projected_end_date->format('Y-m-d H:i:s'),
-                'end_date'           => $this->end_date->format('Y-m-d H:i:s'),
+                'initial_date'       => Carbon::parse($this->initial_date)->format('d/m/Y'),
+                'projected_end_date' => Carbon::parse($this->projected_end_date)->format('d/m/Y'),
+                'diff_days'          => today()->diffInDays(Carbon::parse($this->projected_end_date)),
+                'out_of_date'        => today()->greaterThan(Carbon::parse($this->projected_end_date)),
+                'end_date'           => $this->end_date?->format('Y-m-d H:i:s'),
                 'public'             => $this->public,
                 'approved'           => $this->approved,
             ])

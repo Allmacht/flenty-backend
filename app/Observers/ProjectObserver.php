@@ -4,7 +4,9 @@ namespace App\Observers;
 
 use Illuminate\Support\Str;
 use App\Models\Project;
+use App\Models\UsersPerProject;
 use Carbon\Carbon;
+use Spatie\Permission\Models\Role;
 
 class ProjectObserver
 {
@@ -27,7 +29,13 @@ class ProjectObserver
      */
     public function created(Project $project)
     {
-        //
+        $role = Role::whereName('Project-administrator')->first();
+
+        UsersPerProject::create([
+            'project_id' => $project->id,
+            'user_id'    => $project->owner_id,
+            'role_id'    => $role->id
+        ]);
     }
 
     /**

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Project;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,7 +20,9 @@ return new class extends Migration
             $table->string('email');
             $table->string('role');
             $table->foreignIdFor(Project::class)->unsigned()->onDelete('CASCADE');
-            $table->string('registered')->default(false);
+            $table->foreignIdFor(User::class)->nullable()->constrained()->onDelete('CASCADE');
+            $table->boolean('registered')->default(false);
+            $table->boolean('accepted')->default(false);
             $table->timestamps();
         });
     }

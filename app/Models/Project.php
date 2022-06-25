@@ -26,4 +26,9 @@ class Project extends Model
         'line_id',
         'project_type_id'
     ];
+
+    public function projectType()
+    {
+        return $this->belongsTo(ProjectType::class);
+    }
 }

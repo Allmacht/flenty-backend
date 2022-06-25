@@ -3,9 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Project;
-use App\Models\User;
-use Spatie\Permission\Models\Role;
 
 return new class extends Migration
 {
@@ -16,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users_per_projects', function (Blueprint $table) {
+        Schema::create('priorities', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class)->constrained()->onDelete('CASCADE');
-            $table->foreignIdFor(Project::class)->constrained()->onDelete('CASCADE');
-            $table->foreignIdFor(Role::class)->constrained()->onDelete('CASCADE');
+            $table->string('name');
+            $table->string('image');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users_per_projects');
+        Schema::dropIfExists('priorities');
     }
 };
