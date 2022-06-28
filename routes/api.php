@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttachedFileController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ClientController;
@@ -86,5 +87,12 @@ Route::middleware('auth:sanctum')->controller(PriorityController::class)->prefix
 //Issues routes
 Route::middleware('auth:sanctum')->controller(IssueController::class)->prefix('issues')->group(function(){
     Route::get('/{key}/{uuid}', 'index');
+    Route::get('/{key}/{uuid}/{issue}', 'issue');
+    
     Route::post('/{key}/{uuid}', 'store');
+});
+
+//Attached files routes
+Route::middleware('auth:sanctum')->controller(AttachedFileController::class)->prefix('attached-files')->group(function(){
+    Route::post('/store/{uuid}/{key}', 'store');
 });

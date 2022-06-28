@@ -4,6 +4,7 @@ namespace App\Http\Requests\Issue;
 
 use App\Models\Issue;
 use App\Models\Project;
+use App\Models\User;
 use App\Models\UsersPerProject;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -28,6 +29,8 @@ class StoreRequest extends FormRequest
         else:
 
             $last_key = explode("-",$last_issue->key);
+
+            $key = $last_key[0]."-".str_pad((int)++$last_key[1], 3, "0", STR_PAD_LEFT);
             
         endif;
         
@@ -61,7 +64,7 @@ class StoreRequest extends FormRequest
             'key'           => 'required|string',
             'summary'       => 'required|string',
             'duration'      => 'required|integer|min:1',
-            'assignee_id'   => 'nullable|string|exists:users,folio',
+            'assignee_id'   => 'nullable|integer|exists:users,id',
             'reporter_id'   => 'required|integer|exists:users,id',
             'priority_id'   => 'required|integer|exists:priorities,id',
             'issue_type_id' => 'required|integer|exists:issue_types,id',
