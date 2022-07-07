@@ -3,7 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Project;
+use App\Models\Sprint;
+use App\Models\User;
 
 return new class extends Migration
 {
@@ -14,15 +15,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sprints', function (Blueprint $table) {
+        Schema::create('workflows', function (Blueprint $table) {
             $table->id();
-            $table->string('key');
             $table->string('name');
-            $table->date('initial_date');
-            $table->date('projected_end_date');
-            $table->date('final_date')->nullable();
-            $table->longText('goal')->nullable();
-            $table->foreignIdFor(Project::class)->constrained()->onDelete('CASCADE');
+            $table->string('description');
+            $table->boolean('initial_workflow')->default(false);
+            $table->boolean('final_workflow')->default(false);
+            $table->foreignIdFor(User::class)->constrained()->nullOnDelete();
+            $table->foreignIdFor(Sprint::class)->constrained()->onDelete('CASCADE');
             $table->timestamps();
         });
     }
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sprints');
+        Schema::dropIfExists('workflows');
     }
 };

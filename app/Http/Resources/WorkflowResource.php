@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AttachedFileResource extends JsonResource
+class WorkflowResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,12 +15,11 @@ class AttachedFileResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'file'       => $this->file,
-            'name'       => $this->original_name,
-            'editable'   => $this->editable,
-            'loading'    => false,
-            'created_at' => $this->created_at->format('M d, Y H:i A'),
-            'issue'      => new IssueResource($this->whenLoaded('issue'))
+            'id'               => $this->id,
+            'name'             => $this->name,
+            'description'      => $this->description,
+            'initial_workflow' => $this->initial_workflow,
+            'final_workflow'   => $this->final_workflow,
         ];
     }
 }

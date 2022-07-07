@@ -24,8 +24,8 @@ class ProjectResource extends JsonResource
             'type'   => new ProjectTypeResource($this->whenLoaded('projectType')),
             $this->mergeWhen($request->input('all_data'), [
                 'description'        => $this->description,
-                'initial_date'       => Carbon::parse($this->initial_date)->format('d/m/Y'),
-                'projected_end_date' => Carbon::parse($this->projected_end_date)->format('d/m/Y'),
+                'initial_date'       => Carbon::parse($this->initial_date)->format('M d, Y'),
+                'projected_end_date' => Carbon::parse($this->projected_end_date)->format('M d, Y'),
                 'diff_days'          => today()->diffInDays(Carbon::parse($this->projected_end_date)),
                 'out_of_date'        => today()->greaterThan(Carbon::parse($this->projected_end_date)),
                 'end_date'           => $this->end_date?->format('Y-m-d H:i:s'),

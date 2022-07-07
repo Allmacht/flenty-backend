@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Issue\EditDescriptionRequest;
 use App\Http\Requests\Issue\StoreRequest;
 use App\Http\Requests\Project\ProjectRequest;
 use App\Http\Resources\IssueResource;
 use App\Models\Issue;
 use App\Models\Project;
-use Illuminate\Http\Request;
 
 class IssueController extends Controller
 {
     public function index(ProjectRequest $request, $key, $uuid)
     {
         $issues = Issue::with(['issue_type','priority', 'assignee'])
-                ->whereProject_id(Project::where('key', $key)->whereUuid($uuid)->first()?->value('id'))->get();
+                ->whereProject_id(Project::where('key', $key)->whereUuid($uuid)->first()?->value('id'))
+                ->doesntHave('sprint')
+                ->get();
 
         return IssueResource::collection($issues);
     }
@@ -28,11 +30,20 @@ class IssueController extends Controller
 
     public function issue(ProjectRequest $request, $key, $uuid, $issue)
     {
-        $issue = Issue::with(['assignee', 'reporter', 'priority', 'issue_type', 'files', 'comments', 'subtasks'])
+        $issue = Issue::with(['assignee', 'reporter', 'priority', 'issue_type'])
                 ->whereProject_id(Project::where('key', $key)->whereUuid($uuid)->first()?->value('id'))
                 ->where('key', $issue)
                 ->first();
 
         return new IssueResource($issue);
+    }
+
+    public function updateDescription(EditDescriptionRequest $request)
+    {
+        Issue::whereId($request->issue_id)->update([
+            'description' => $request->description,
+        ]);
+
+        return response()->json(['success' => true], 200);
     }
 }

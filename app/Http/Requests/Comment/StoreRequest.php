@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Project;
+namespace App\Http\Requests\Comment;
 
+use App\Models\Issue;
 use App\Models\Project;
 use App\Models\UsersPerProject;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProjectRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,12 +16,15 @@ class ProjectRequest extends FormRequest
      */
     public function prepareForValidation()
     {
-        $this->merge(['key' => $this->route('key'), 'uuid' => $this->route('uuid')]);
+        $issue = Issue::whereProjectId(Project::where('key', $this->route()->key)->whereUuid($this->route()->uuid)->first()->value('id'))
+                    ->where('key', $this->route()->issue)
+                    ->first();
+                    
+        $this->merge(['issue_id' => $issue->id, 'uuid' => $this->route()->uuid]);
     }
 
     public function authorize()
     {
-
         return UsersPerProject::
                     whereProject_id(Project::whereUuid($this->uuid)->first()->value('id'))
                     ->whereUser_id($this->user()->id)
@@ -35,8 +39,10 @@ class ProjectRequest extends FormRequest
     public function rules()
     {
         return [
-            'key'  => 'required|string|exists:projects,key',
-            'uuid' => 'required|string|uuid|exists:projects,uuid',
+            'comment'  => 'required|string|max:500',
+            'issue_id' => 'required|integer|exists:issues,id',
+            'uuid'     => 'required|uuid|exists:projects,uuid',
+            'user_id'  => 'required|integer|exists:users,id'
         ];
     }
 }

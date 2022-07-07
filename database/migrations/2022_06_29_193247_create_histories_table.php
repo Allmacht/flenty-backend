@@ -1,10 +1,9 @@
 <?php
 
+use App\Models\{Issue, User};
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Project;
-use App\Models\User;
 
 return new class extends Migration
 {
@@ -15,12 +14,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('workflows', function (Blueprint $table) {
+        Schema::create('histories', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('description');
+            $table->string('summary');
+            $table->string('subtitle');
+            $table->foreignIdFor(Issue::class)->constrained()->onDelete('CASCADE');
             $table->foreignIdFor(User::class)->constrained()->nullOnDelete();
-            $table->foreignIdFor(Project::class)->constrained()->onDelete('CASCADE');
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('workflows');
+        Schema::dropIfExists('histories');
     }
 };

@@ -5,18 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Subtask extends Model
+class IssuesPerSprint extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'subtask',
-        'value',
+        'sprint_id',
         'issue_id',
+        'workflow_id',
     ];
-
-    public function issue()
-    {
-        return $this->belongsTo(Issue::class);
-    }
 }

@@ -62,5 +62,14 @@ class Issue extends Model
         return $this->hasMany(Subtask::class);
     }
 
+    public function sprint()
+    {
+        return $this->hasOne(IssuesPerSprint::class)->with('workflow');
+    }
+
+    public function workflow()
+    {
+        
+    }
 
 }
