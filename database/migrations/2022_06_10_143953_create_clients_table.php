@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('phone');
             $table->boolean('status')->default(true);
-            $table->foreignIdFor(Company::class)->constrained()->nullOnDelete();
+            $table->foreignIdFor(Company::class)->constrained()->onDelete('CASCADE');
             $table->timestamps();
         });
     }

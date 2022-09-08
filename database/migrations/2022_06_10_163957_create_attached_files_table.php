@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('extension');
             $table->string('original_name');
             $table->boolean('editable')->default(true);
-            $table->foreignIdFor(Issue::class)->constrained()->nullOnDelete();
+            $table->foreignIdFor(Issue::class)->constrained()->onDelete('CASCADE');
             $table->timestamps();
         });
     }

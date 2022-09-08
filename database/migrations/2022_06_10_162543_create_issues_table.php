@@ -29,9 +29,9 @@ return new class extends Migration
             $table->unsignedBigInteger('assignee_id');
             $table->foreign('assignee_id')->references('id')->on('users')->onDelete('CASCADE');
             $table->unsignedBigInteger('reporter_id');
-            $table->foreign('reporter_id')->references('id')->on('users')->nullOnDelete();
-            $table->foreignIdFor(Priority::class)->constrained()->nullOnDelete();
-            $table->foreignIdFor(IssueType::class)->constrained()->nullOnDelete();
+            $table->foreign('reporter_id')->references('id')->on('users')->onDelete('CASCADE');
+            $table->foreignIdFor(Priority::class)->constrained()->onDelete('CASCADE');
+            $table->foreignIdFor(IssueType::class)->constrained()->onDelete('CASCADE');
             $table->foreignIdFor(Project::class)->constrained()->onDelete('CASCADE');
             $table->timestamps();
         });

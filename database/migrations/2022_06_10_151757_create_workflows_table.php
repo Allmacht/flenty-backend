@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('description');
             $table->boolean('initial_workflow')->default(false);
             $table->boolean('final_workflow')->default(false);
-            $table->foreignIdFor(User::class)->constrained()->nullOnDelete();
+            $table->foreignIdFor(User::class)->constrained()->onDelete('CASCADE');
             $table->foreignIdFor(Sprint::class)->constrained()->onDelete('CASCADE');
             $table->timestamps();
         });

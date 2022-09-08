@@ -34,11 +34,11 @@ return new class extends Migration
             $table->unsignedBigInteger('owner_id');
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('CASCADE');
             $table->unsignedBigInteger('qa_id');
-            $table->foreign('qa_id')->references('id')->on('users')->nullOnDelete();
-            $table->foreignIdFor(Client::class)->constrained()->nullOnDelete();
+            $table->foreign('qa_id')->references('id')->on('users')->onDelete('CASCADE');
+            $table->foreignIdFor(Client::class)->constrained()->onDelete('CASCADE');
             $table->foreignIdFor(Company::class)->constrained()->onDelete('CASCADE');
             $table->foreignIdFor(Line::class)->constrained()->onDelete('CASCADE');
-            $table->foreignIdFor(ProjectType::class)->constrained()->nullOnDelete();
+            $table->foreignIdFor(ProjectType::class)->constrained()->onDelete('CASCADE');
             $table->timestamps();
         });
     }

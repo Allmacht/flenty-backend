@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('summary');
             $table->string('subtitle');
             $table->foreignIdFor(Issue::class)->constrained()->onDelete('CASCADE');
-            $table->foreignIdFor(User::class)->constrained()->nullOnDelete();
+            $table->foreignIdFor(User::class)->constrained()->onDelete('CASCADE');
             $table->timestamps();
         });
     }
